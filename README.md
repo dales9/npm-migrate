@@ -11,13 +11,14 @@ const migrate = require('npm-migrate')
 const moduleName = 'my-private-module'
 const from = 'http://your-old.private-registry.com:8080'
 const to = 'http://nice-new.private-registry.org:8080'
+const newModuleName = '@new/my-private-module' // optional
 
 // optional
 const options = {
     debug: false // default
 }
 
-migrate(moduleName, from, to, options)
+migrate(moduleName, from, to, newModuleName, options)
     .then((migrated) => console.log(migrated)) // list of migrated packages
     .catch((err) => console.error(err))
 
@@ -40,3 +41,4 @@ migrate(moduleName, from, to, options)
 
 - v1.2.0 - Work with scoped packages
 - v1.3.0 - Compare both registries and migrate only the remaining versions not in the new registry
+- v1.4.0 - Added support to update module name

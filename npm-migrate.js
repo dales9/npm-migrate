@@ -7,14 +7,16 @@ const cleanup = require('./cleanup')
 const { getVersionList, getTarballs, publishSeries } = require('./npm_utils')
 const updatePackage = require('./update')
 
-module.exports = function (moduleName, oldRegistry, newRegistry, options = { debug: false }) {
+module.exports = function (moduleName, oldRegistry, newRegistry, newModuleName, options = { debug: false }) {
 
     if (!options.debug) {
         var unmute = mute()
     }
 
+    const newName = (newModuleName == null) ? moduleName : newModuleName; 
+
     let curried_updatePackage = curry(updatePackage)
-    curried_updatePackage = curried_updatePackage(newRegistry)
+    curried_updatePackage = curried_updatePackage(newRegistry, newName)
 
     let curried_getTarballs = curry(getTarballs)
     curried_getTarballs = curried_getTarballs(moduleName, oldRegistry)
